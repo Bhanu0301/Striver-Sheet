@@ -1,0 +1,130 @@
+/* Naive Approach is using Count Sort
+ Make a helper Array of size N(all intitialzied to 0)
+ Traverse the main array and accordingly mark in the helper array ;the frequency of occurance
+ the one with freq > 1 is repeating and one with freq = 0 is missing*/ 
+ //TC : O(n)+O(n) = O(2n)
+ //SC : O(n)
+ 
+ 
+
+//Check for the PEPCODING vedio
+class Solve{
+    int[] findTwoElement(int arr[],int n){
+        int[] arr1 = new int[2];
+        int xor = 0;
+        
+        for(int val:arr){
+            xor = xor  ^ val;
+        }
+        for(int i = 1;i<=n;i++){
+            xor = xor ^ i;
+        }
+        
+        int rmbm = xor & -xor;
+        int x = 0;
+        int y = 0;
+        for(int val:arr){
+            if((val & rmbm) == 0){
+                //Ante Bit mask is OFF
+                x = x^val;
+            }
+            else{//Ante mask ON
+                y = y^val;
+            }
+        }
+        for(int i = 1 ;i<=n;i++){
+            if((i & rmbm) == 0){
+                x = x^i;
+            }
+            else{
+                y = y^i;
+            }
+        }
+        int count = 0;
+        
+        for(int val:arr){
+            if(x==val){
+                count++;
+            }
+        }
+        if(count==2){
+            arr1[0] = x;
+            arr1[1] = y;
+        }
+        else{
+            arr1[0] = y;
+            arr1[1] = x;
+        }
+        return arr1;
+    }
+}
+
+// class Solve {
+//     int[] findTwoElement(int arr[], int n) {
+//         // code here
+//         long S = n*(n+1)/2L;
+//         long P = n*(n+1)*((2*n)+1)/6L;
+        
+//         for(int i=0 ;i<n;i++){
+//             S = S - (long)arr[i];
+//             P = P - (long)arr[i]*(long)arr[i];
+//         }
+//         long missing = 0L;
+//         long repeating = 0L;
+        
+//         missing = (S + P/S)/2;
+//         repeating = missing - S;
+        
+//         int[] ans = new int[2];
+        
+//         ans[0] = (int)repeating;
+//         ans[1] =(int)missing;
+        
+//         return ans;
+//     }
+    
+// }     This won't work for large Inputs
+
+
+//STRIVER DOCUMENT
+// class Solve {
+//     int[] findTwoElement(int arr[], int n) {
+//         // code here
+//         int[] ans = new int[2];
+//         int set_bit_no,i, x = 0,y = 0,xor1 = arr[0];
+//         for (i = 1; i < n; i++)
+//             xor1 = xor1 ^ arr[i];
+//         for (i = 1; i <= n; i++)
+//             xor1 = xor1 ^ i;
+//         set_bit_no = xor1 & ~(xor1 - 1);
+//         for (i = 0; i < n; i++) {
+//             if ((arr[i] & set_bit_no) != 0)
+//                 x = x ^ arr[i];
+//             else    
+//                 y = y ^ arr[i];
+//         }
+//         for (i = 1; i <= n; i++) {
+//             if ((i & set_bit_no) != 0)
+//                 x = x ^ i;
+//             else
+//                 y = y ^ i;
+//         }
+//       int count=0;
+//       for(i=0;i<n;i++)
+//       {
+//           if(x==arr[i])
+//               count++;
+//       }
+//       (count==2)
+//       {
+//           ans[0]=x;
+//           ans[1]=y;
+//       }
+//       else
+//       {
+//           ans[0]=y;
+//           ans[1]=x;
+//       }
+//       return ans;
+//     }
+// }
