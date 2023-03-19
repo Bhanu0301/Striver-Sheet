@@ -9,14 +9,14 @@
 
 //Check for the PEPCODING vedio
 class Solve{
-    int[] findTwoElement(int arr[],int n){
+    int[] findTwoElement(int arr[],int n){      //arr = [3,2,1,2,5]
         int[] arr1 = new int[2];
         int xor = 0;
         
-        for(int val:arr){
+        for(int val:arr){                      // 0^3^2^1^2^5 = 3^1^5
             xor = xor  ^ val;
         }
-        for(int i = 1;i<=n;i++){
+        for(int i = 1;i<=n;i++){              // 3^1^5 ^1^2^3^4^5 = 2^4 (here 2 is repeating and 4 is missing)
             xor = xor ^ i;
         }
         
@@ -25,29 +25,29 @@ class Solve{
         int y = 0;
         for(int val:arr){
             if((val & rmbm) == 0){
-                //Ante Bit mask is OFF
+                                             //Ante Bit mask is OFF
                 x = x^val;
             }
-            else{//Ante mask ON
-                y = y^val;
+            else{                            //Ante mask ON
+                y = y^val; 
             }
         }
-        for(int i = 1 ;i<=n;i++){
+        for(int i = 1 ;i<=n;i++){         //Similar ga 1,2,3,4,5 ki kuda chedham
             if((i & rmbm) == 0){
                 x = x^i;
             }
             else{
                 y = y^i;
             }
-        }
+        }                                 // Finally we get value of x and y ...but how to identify which is repeating and which is not.
         int count = 0;
         
         for(int val:arr){
-            if(x==val){
+            if(x==val){                  // checking in given arr if value of x is appearing twice or not
                 count++;
             }
         }
-        if(count==2){
+        if(count==2){                   // if value of x is appearing twice then x is repeating and y is missing
             arr1[0] = x;
             arr1[1] = y;
         }
