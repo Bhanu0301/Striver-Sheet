@@ -1,7 +1,7 @@
 class Solution {
     public void sortColors(int[] nums) {
 
-        //DUTCH FLAG ALGORITHM
+        //DUTCH FLAG ALGORITHM   TC:O(n) & SC:O(1)
         /* All elements before low is 0, all elements after high is 2 and all elems 
         b/w low to mid-1 is 1*/ 
         
