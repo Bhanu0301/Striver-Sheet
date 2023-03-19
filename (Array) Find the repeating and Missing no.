@@ -5,7 +5,7 @@
  //TC : O(n)+O(n) = O(2n)
  //SC : O(n)
  
- 
+ /* ******************************************************************* */
 
 //Check for the PEPCODING vedio
 class Solve{
@@ -20,7 +20,7 @@ class Solve{
             xor = xor ^ i;
         }
         
-        int rmbm = xor & -xor;
+        int rmbm = xor & -xor;                // right most bit mask that is set
         int x = 0;
         int y = 0;
         for(int val:arr){
@@ -58,6 +58,10 @@ class Solve{
         return arr1;
     }
 }
+
+ /* ******************************************************************* */
+
+
 
 // class Solve {
 //     int[] findTwoElement(int arr[], int n) {
