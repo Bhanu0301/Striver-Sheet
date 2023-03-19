@@ -1,0 +1,99 @@
+// Given an m x n matrix if an elem is 0 then its complete row and column should also be 0.
+
+/* Brute Force
+   
+   Keep Traversing the Matrix
+   If we find elem = 0
+   Traverse its entire row and col and mark all non-zeros as -1
+   once u traverse the entire matrix
+   traverse again and change all -1 to 0
+   
+   TC : O(nxm + n+m)
+   SC : O(1)
+*/
+
+/* Approach 2 : 
+   Extra dummy array for row and col of size m and n respectively
+   Traverse the matrix and if found elem=0 then set the corresponing dummy arr value to 0 for both row and col array
+   After completing the entire traverse of matrix
+   Check if row[i] = 0 then entire row will be set to 0, similarly do it for col[i] and set 0s to all those matrix columns
+   
+   TC : O(nm + nm)
+   SC : O(n)+O(m)
+   
+*/
+
+// Best Approach(Optimization to above app)
+
+//TC : O(nm)
+//SC : O(1)
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        //initially let both row and col be set to false
+        boolean row = false;
+        boolean column = false;
+        
+        int n = matrix.length;    //it will return the no. of rows
+        int m = matrix[0].length; //it will return the column
+        
+        //Firstly I will check the first row and first column and see if there is 0's originally in them.
+        //if yes I will set the entire row and col as true but will not alter the first row and column members now(because it will alter my entire matrix)
+        
+        for(int i = 0;i<n;i++){
+            if(matrix[i][0] == 0)
+                column = true;
+        }
+        for(int j= 0;j<m;j++){
+            if(matrix[0][j] == 0)
+                row = true;
+        }
+        
+        // Now i need to take care the rest elements (leaving first row and column)
+        for(int i = 1;i<n ;i++){
+            for(int j=1;j<m ;j++){
+                //if any element is 0 then its corresponding first row and column elem is set to 0
+                if(matrix[i][j] == 0){
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        
+        //So, the entire matrix (excluding the first row and column )is traversed and accordingly i made changes to first row and column to track if there is 0 in that row or column
+
+        //now i need to check row-wise if the starting elem is 0 then set the entire row to zero
+        //then similarly to column
+        
+        //row kosam
+        for(int i=1 ;i<n ;i++){
+            if(matrix[i][0] == 0){
+                for(int j=0 ;j<m ;j++){
+                    matrix[i][j] = 0;
+                }
+            }
+        } 
+        //Column kosam
+        for(int j =1 ;j<m;j++){
+            if(matrix[0][j] == 0){
+                for(int i=0;i<n;i++){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+//So all elements(except the first row and column)has made it's changes accordingly
+
+        //if first row is true(which means originally it has 0)
+        //I need to set entire row to 0 
+        if(row){
+            for(int j =0; j<m ;j++){
+                matrix[0][j] = 0;
+            }
+        }
+        //Similarly for column
+        if(column){
+            for(int i =0; i<n ;i++){
+                matrix[i][0] = 0;
+            }
+        }
+    }
+}
