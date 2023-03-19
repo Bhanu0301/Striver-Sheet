@@ -1,0 +1,28 @@
+class Solution {
+    public int findDuplicate(int[] nums) {
+
+        // Naive approach was to sort the array and check for elem at ith and (i+1)th position. T:O(NlogN) and S:O(1)
+
+        // Futher optimal  was to use hashmaps ; make a freqency array and note the freq array of elements visited and if voisited more than once(visiting again which is already visited) then return that elem , T:O(N) and S:O(N)
+
+        //Best Optimal way is to use the linked list method of cycle using two pointer method(Tortoise method),T:O(N) and S:O(1)
+        int slow = nums[0];
+        int fast = nums[0];
+
+        do{
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }while(slow!=fast);
+
+        fast = nums[0];
+        
+        while(slow!=fast){
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return fast;
+    }
+}
+
+//TORTOISE METHOD
+//slow pointer will move by 1 then fast will move by 2
