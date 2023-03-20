@@ -1,0 +1,26 @@
+/* Brute force approach for this would be to use Powerset which uses bit manipulation
+   However this can be optimized by solving this the following way */
+class Solution{
+    
+    static void Helper(int sum,int ind,ArrayList<Integer> arr,int N,ArrayList<Integer> subSums){
+        //Base condition
+        if(ind == N){
+            subSums.add(sum);
+            return;
+        }
+        //Either I pick the element and add to sum
+        Helper(sum+arr.get(ind),ind+1,arr,N,subSums);
+        //Or I will just traverse without picking up
+        Helper(sum,ind+1,arr,N,subSums);
+    }
+    ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int N){
+        
+        //create a new data structure called Sums which is to be returned
+        ArrayList<Integer> subSums = new ArrayList<Integer>();
+        //now I will call my Helper function to carry out the recursive process
+        Helper(0,0,arr,N,subSums);
+        Collections.sort(subSums);
+        return subSums;
+        
+    }
+}
