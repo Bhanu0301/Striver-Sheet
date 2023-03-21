@@ -1,0 +1,48 @@
+/* Given with an Array representing the prices of a Stock on particular day,Find the max profit that can be achieved by buying the stock on particular day 
+and selling it on a different day.
+
+example :
+{ 7 , 1 ,5 ,3 ,6 ,4}
+O/P : 5 (How?)-> I buy stock when price is 1(on day two) and sell it on day 5 when price is 6 => profit = 6-1 = 5 */
+
+//Brute Force Approach
+
+/* Using two pointers i,j(@i+1) loops
+   Each time check if arr[j]>arr[i]...if yes 
+      MaxProfit = Math.max(arr[j]-arr[i],MaxProfit);
+   
+   TC : O(n^2)
+   SC : O(1)
+*/
+
+//Best Approach 
+
+/* At the same time keep track of minPrice and maxProfit
+
+   Linearly traverse once through the array in loop
+      each time find whether elem at i is minimum or not,if minimum  then update it
+      and find the profit ; maxProfit = Math.max(arr[i]-maxprofit,maxProfit);
+   
+   //TC: O(n)
+   //SC: O(1)
+   
+*/
+class Solution {
+    public int maxProfit(int[] price) {
+        int minprice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+        for(int i = 0; i<price.length ;i++){
+            // if(price[i]<minprice)
+            //     minprice = price[i];
+            // else if(price[i]-minprice > maxprofit)
+            //     maxprofit = price[i] - minprice;
+            minprice = Math.min(price[i],minprice);
+            maxProfit = Math.max(price[i]-minprice,maxProfit);
+        }
+        return maxProfit;
+    }
+}
+
+   
+
+
