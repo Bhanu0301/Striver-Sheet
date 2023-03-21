@@ -61,3 +61,58 @@ class Solution {
 
 TC: O(2^n)
 SC: O(2^n)
+
+
+
+
+
+
+
+//When there is some sorted order in testcase we need to sort our ArrayList<ArrayList<Integer>> using A COMPARATOR
+class Solution
+{
+    static void Helper(int ind,ArrayList<Integer> A,ArrayList<Integer> subs,ArrayList<ArrayList<Integer>> res){
+        //base case
+        if(ind == A.size()){
+            res.add(new ArrayList<Integer>(subs));
+            return;
+        }
+        //Else I either pick the elem
+        subs.add(A.get(ind));
+        Helper(ind+1,A,subs,res);
+        //Or I remove that elem
+        subs.remove(subs.size()-1);
+        Helper(ind+1,A,subs,res);
+        
+        return;
+    }
+    public static ArrayList<ArrayList<Integer>> subsets(ArrayList<Integer> A)
+    {
+        //code here
+        //They have given us with A an array {1,2,3}
+        //we have to return ArrayList as o/p
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        Helper(0,A,new ArrayList<Integer>(),res);
+        Collections.sort(res,new Comparator<ArrayList<Integer>>(){
+            public int compare(ArrayList<Integer>p,ArrayList<Integer> q){
+                int oneSize = p.size();
+                int twoSize = q.size();
+                
+                for(int i = 0;i<Math.min(oneSize,twoSize);i++){
+                    if(i==oneSize||i==twoSize){
+                        return oneSize - twoSize;
+                    }
+                    int elemOne = p.get(i);
+                    int elemTwo = q.get(i);
+                    
+                    if(elemOne == elemTwo){
+                        continue;
+                    }
+                    return Integer.compare(elemOne,elemTwo);
+                }
+                return p.size()-q.size();
+            }
+        });
+        return res;
+    }
+}
