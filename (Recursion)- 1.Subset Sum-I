@@ -24,3 +24,40 @@ class Solution{
         
     }
 }
+
+
+//TO PRINT ALL THE SUBSETS(POWER SET)
+
+class Solution {
+    void Helper(int ind,int[] nums,List<Integer> subs,List<List<Integer>> res){
+            //base case
+            if(ind == nums.length){
+                res.add(new ArrayList<>(subs));
+                return;
+            }
+            //I either considerthe element at that index
+            subs.add(nums[ind]);
+            Helper(ind + 1,nums,subs,res);
+            //Or I exclude the elem at that Index wiz nothing but removing from sub prev added elem
+            subs.remove(subs.size()-1);
+            Helper(ind + 1,nums,subs,res);
+            return; 
+            
+    }
+    public List<List<Integer>> subsets(int[] nums) {
+        //Its printing all the subsets
+        //[1,2,3]
+        /* at each time i either select the elem at that index or don't select the elem '*/ 
+        //[[1,2,3],[1,2],[1,3],[1],[2,3],[2],[3],[]]
+        
+        //ArrayList<Integer>  subs= new ArrayList<Integer>();
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        Helper(0,nums,new ArrayList<>(),res);
+        return res;
+
+
+    }
+}
+
+TC: O(2^n)
+SC: O(2^n)
