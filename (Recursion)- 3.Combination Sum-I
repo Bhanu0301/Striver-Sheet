@@ -42,3 +42,53 @@ class Solution {
         return ans;
     }
 }
+
+
+
+
+
+
+
+//GFG 
+
+class Solution
+{
+    static void Helper(int ind,ArrayList<Integer> A,int B,ArrayList<Integer> ds,ArrayList<ArrayList<Integer>> ans){
+        
+        if(ind==A.size()){
+            if(B == 0){
+                ans.add(new ArrayList<>(ds));
+            }
+            return;
+        }
+        if(A.get(ind)<=B){
+            ds.add(A.get(ind));
+            Collections.sort(ds);
+            Helper(ind,A,B-A.get(ind),ds,ans);
+            ds.remove(ds.size()-1);
+        }
+        Helper(ind+1,A,B,ds,ans);
+    }
+    //Function to return a list of indexes denoting the required 
+    //combinations whose sum is equal to given number.
+    static ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> A, int B)
+    {
+        
+
+       /*To Handle inputs like A[] = {2,8,3,8,7} where we have numbers repeating,this may lead to duplicate combinations.
+       To avoid this by adding them into set. */
+
+
+        Set<Integer> set = new HashSet<>(A);
+        A.clear();                          //Clearing the Original given ArrayList
+        A.addAll(set);                      //Adding all unique nums from Set
+        Collections.sort(A);                //Then Sort The ArrayList so that we get output in order of numbers from lowest to Highest
+
+
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<ArrayList<Integer>>();
+        Helper(0,A,B,new ArrayList<>(),ans);
+        return ans;
+        
+    }
+}
+
