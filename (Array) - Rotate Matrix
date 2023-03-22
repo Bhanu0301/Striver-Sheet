@@ -1,0 +1,50 @@
+//Given a 2D Array(MATRIX) , rotate it clockwise by 90 degrees.
+
+//Brute Force Approach
+
+/* Take a dummy Matrix of size n*n and then take the first row from original matrix and add it into last column of ur dummy matrix
+   Second row into second last column, last row into first column */
+   
+//TC : O(n*n)
+//SC : O(n*n)
+
+
+//Optimal Approach
+
+// Matrix --> Transpose --> Reverse each row
+
+[1 2 3       [1 4 7         [7 4 1
+ 4 5 6        2 5 8          8 5 2
+ 7 8 9]       3 6 9]         9 6 3]
+ 
+//This gives us clockwise Rotated matrix 
+//TC : O(n*n)
+//SC : O(1)
+
+class Solution {
+    public void rotate(int[][] arr) {
+        //transpose of given matrix
+        for(int i =0;i<arr.length;i++){
+            for(int j=i;j<arr[0].length;j++){     //j=i
+                int temp = arr[i][j];
+                arr[i][j]=arr[j][i];
+                arr[j][i]=temp;
+            }
+        }  
+        //to reverse each row to get my res matrix
+        for(int j = 0 ;j<arr[0].length ;j++){
+            int li=0;
+            int ri=arr[0].length-1;
+            while(li<ri){
+                int temp = arr[j][li];
+                arr[j][li]=arr[j][ri];
+                arr[j][ri]=temp;
+
+                li++;
+                ri--;
+            }
+
+        }
+    }
+}
+
