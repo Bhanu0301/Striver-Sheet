@@ -1,0 +1,40 @@
+//Given an array of inputs with repeated numbers and a target sum, we need to generate all possible subsets with No repeatation of combinations.
+
+//Brute force 
+// Same as Combination Sum -I and to handle duplicates use Hashset(extra Space) and logarithmic time
+
+//Better Approach --> Combination Sum-I + Unique Subsets method
+
+class Solution {
+    //Same as Printing all Subsets but with sum constraint
+    static void Helper(int ind,int[] candidates,int target,List<Integer> ds,List<List<Integer>> ans){
+        if(target == 0){
+            ans.add(new ArrayList<>(ds));
+        }
+        for(int i = ind; i<candidates.length;i++){
+        
+            //This is used to avoid Duplicate combinations
+            if(i>ind && candidates[i]==candidates[i-1])continue;
+            if(candidates[i]>target)break;
+
+            ds.add(candidates[i]);
+            Helper(i+1,candidates,target-candidates[i],ds,ans);
+            ds.remove(ds.size()-1);
+        }
+    }
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        Helper(0,candidates,target,new ArrayList<>(),ans);
+        return ans;
+    }
+}
+
+Time Complexity:O(2^n*k)
+
+Reason: Assume if all the elements in the array are unique then the no. of subsequence you will get will be O(2^n). we also add the ds to our ans when we reach the base case that will take “k”//average space for the ds.
+
+
+Space Complexity:O(k*x)
+
+Reason: if we have x combinations then space will be x*k where k is the average length of the combination.
