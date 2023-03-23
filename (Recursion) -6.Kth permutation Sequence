@@ -1,0 +1,38 @@
+//Brute force would be to generate all possible permutations, then Sort them and find (k-1)th sequence  
+// But this takes a large time complexity TC:O(n!*n)+O(nlogn)....:(((
+
+
+//Better Approach 
+//TC : O(n^2)
+//SC : O(n)
+
+class Solution {
+    public String getPermutation(int n, int k) {
+        
+        // n = Number 
+        //k = The sequence number(k th permutations)
+
+        //Firstly add the numbers into Some data structure like ArrayList
+        //n=4, k =17
+        //[1,2,3,4]
+        ArrayList<Integer> nums = new ArrayList<Integer>();
+        int fact = 1; 
+        for(int i = 1;i<n;i++){
+            fact = fact * i;   //1*2*3 = 6
+            nums.add(i);       //[1,2,3]
+        }
+        nums.add(n);        //[1,2,3, 4]
+        String ans = "";
+        k = k-1;            // k =17-1 = 16(0 based Indexing)
+        while(true){
+            ans = ans+""+nums.get(k/fact);  // ans = "" + nums.get(16/6)(in String) = "nums.get(2)"=3
+            nums.remove(k/fact);            // [1,2,4]
+            if(nums.size() == 0){           //when numbers list becomes empty
+                break;
+            }
+            k = k%fact;                     //16%6 = 4
+            fact=fact/nums.size();          //6/3 = 2
+        }
+        return ans;
+    }
+}
