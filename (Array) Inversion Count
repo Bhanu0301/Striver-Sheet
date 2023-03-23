@@ -1,0 +1,79 @@
+//Inversion?
+// A pair (i,j) from array is said to be an inversion pair if i<j but arr[i]>arr[j]
+
+//arr[] = [8,4,2,1]
+//inv pairs = [(8,4),(8,2),(8,1),(4,2),(4,1),(2,1)]
+//inv count = 6
+
+//Brute force approach
+//Two pointer for loop [TC : O(n^2)] and count++
+
+
+//Better Approach is To use merge Sort
+
+
+/*                 8,4,2,1
+              8,4          2,1
+            8     4      2     1
+            
+            ic = 1       ic = 1+1
+            4,8           1,2
+      @i=4  ic = 1+1+2   
+      @i=8  ic = 1+1+2+2
+                  1,2,4,8
+                  
+                 
+*/
+
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static long getInversions(long arr[], int n) {
+        // Write your code here.
+        long inver=0;
+        inver=mergeSort(arr,0,n-1);
+        return inver;
+        
+    }
+    
+    static long mergeSort(long arr[], int si, int ei)
+    {
+        long inv=0;
+        if(si<ei){
+            int mid=(si+ei)/2;
+            inv+=mergeSort(arr,si,mid);
+            inv+=mergeSort(arr,mid+1,ei);
+            inv+=conqure(arr,si,mid,ei); //merge
+        }
+        return inv;
+    }
+    static long conqure(long arr[], int si, int mid, int ei)
+    {
+        long inv=0;
+        long merged[]=new long[ei-si+1];
+        int idx1=si;
+        int idx2=mid+1;
+        int x=0;
+        while(idx1<= mid && idx2<=ei ){
+            if(arr[idx1]<=arr[idx2]){
+                merged[x++]=arr[idx1++];
+            }else{
+                inv+=(mid+1-idx1);    //Inversion count
+                merged[x++]=arr[idx2++];
+                
+            }
+        }
+        
+        while(idx1<=mid){
+            merged[x++]=arr[idx1++];
+        }
+        while(idx2<=ei){
+            merged[x++]=arr[idx2++];
+        }
+        for(int i =0, j=si;i<merged.length;i++){
+            arr[j++]=merged[i];
+        }
+        return inv;
+        
+    }
+}
