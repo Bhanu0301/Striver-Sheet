@@ -18,7 +18,7 @@ class Solution {
         for(int i = ind;i<nums.length;i++){
             swap(ind,i,nums);
             Helper(ind+1,nums,ans);
-            swap(ind,i,nums);
+            swap(ind,i,nums);     //Backtrack
         }
     }
     static void swap(int i,int j,int[] nums){
