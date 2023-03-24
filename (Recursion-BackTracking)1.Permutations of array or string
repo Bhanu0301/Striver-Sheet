@@ -32,3 +32,34 @@ class Solution {
         return ans;
     }
 }
+
+
+// For Strings
+
+class Solution {
+    static void Helper(int ind,String S,List<String> ans){
+        if(ind == S.length() && (!ans.contains(S))){
+            ans.add(S);
+            return;
+        }
+        for(int i = ind;i<S.length();i++){
+            S = swap(ind,i,S);
+            Helper(ind+1,S,ans);
+            S =swap(ind,i,S);
+        }
+    }
+    static String swap(int i,int j,String S){
+        char[] Str = S.toCharArray();
+        char temp = Str[i];
+        Str[i] = Str[j];
+        Str[j] = temp;
+        return String.valueOf(Str);
+    }
+    public List<String> find_permutation(String S) {
+        // Code here
+        List<String> ans = new ArrayList<String>();
+        Helper(0,S,ans);
+        Collections.sort(ans);
+        return ans; 
+    }
+}
