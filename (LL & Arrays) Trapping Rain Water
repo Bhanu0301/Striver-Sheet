@@ -1,0 +1,34 @@
+class Solution{
+    
+    // arr: input array
+    // n: size of array
+    // Function to find the trapped water between the blocks.
+    static long trappingWater(int height[], int n) { 
+        // Your code here
+        //int n = height.length;
+        int left = 0, right = n - 1;
+        long res = 0;
+        int maxLeft = 0, maxRight = 0;
+        while (left <= right) {
+            if (height[left] <= height[right]) {
+                if (height[left] >= maxLeft) {
+                    maxLeft = height[left];
+                } else {
+                    res += maxLeft - height[left];
+                }
+                left++;
+            } else {
+                if (height[right] >= maxRight) {
+                    maxRight = height[right];
+                } else {
+                    res += maxRight - height[right];
+                }
+                right--;
+            }
+        }
+        return res;
+    }
+}
+
+TC : O(N)
+SC : O(1)
