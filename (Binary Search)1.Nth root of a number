@@ -1,0 +1,33 @@
+
+class Solution
+{
+    // public double multiply(double mid,int n){
+    //     double ans = 1.0;
+    //     for(int i = 1;i<=n;i++){
+    //         ans = ans * mid;
+    //     }
+    //     return ans;
+    // }
+    public int NthRoot(int n, int m)
+    {
+        // code here
+        int low = 1;
+        int high = m;
+        
+        while(low<=high){
+            int mid = low+(high-low)/2;
+            if(Math.pow(mid,n)==m)
+                return mid;
+            else if(Math.pow(mid,n)>m)
+                high = mid-1 ;
+            else
+                low = mid+1;
+        }
+        return -1;
+        
+    }
+}
+
+Time Complexity: N x log(M x 10^d)
+
+Space Complexity: O(1)
