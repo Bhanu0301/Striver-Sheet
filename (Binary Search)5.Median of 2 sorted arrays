@@ -1,0 +1,48 @@
+Approach 1 :
+TC & SC: O(n+m) & O(m+n)
+
+Merge sort to combine + middle
+
+Approach 2 :
+TC & SC : O(n+m) & O(1)
+
+Counter method to count till middle(median)
+
+
+
+Approach 3 : BINARY SEARCH
+TC & SC : O(log(m+n)) & O(1)
+
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if(nums1.length>nums2.length)
+            //Ensuring that I apply the Binary Search on smaller array
+            return findMedianSortedArrays(nums2,nums1);
+        
+        int left = 0 ,right = nums1.length, mid = (nums1.length+nums2.length+1)/2;
+
+        while(left<=right){
+            int cut1 = (left + right)/2;
+            int cut2 = mid - cut1;
+
+            int l1 = (cut1==0)? Integer.MIN_VALUE:nums1[cut1-1];
+            int l2 = (cut2==0)? Integer.MIN_VALUE:nums2[cut2-1];
+            int r1 = (cut1==nums1.length)? Integer.MAX_VALUE:nums1[cut1];
+            int r2 = (cut2==nums2.length)? Integer.MAX_VALUE:nums2[cut2];
+
+            if(l1<=r2 && l2<=r1){
+                if((nums1.length+nums2.length)%2 == 0) //if total count of numbers is EVEN then middle 2 elements Half is median
+                    return (Math.max(l1,l2)+Math.min(r1,r2))/2.0;
+                else //The middle elem
+                    return (Math.max(l1,l2));
+            }
+            else if(l1>r2){ // Reducing l1
+                right = cut1- 1;
+            }else{          // Increasing l2
+                left = cut1 + 1;
+            }
+        }
+        return 0.0;
+    }
+}
+
