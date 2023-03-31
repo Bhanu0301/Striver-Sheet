@@ -1,0 +1,74 @@
+Time Complexity: O(N*log(M)). 
+
+Reason: For binary search in a space of M, O(log(M))  and for each search, we iterate over max N stalls to check. O(N).
+
+Space Complexity: O(1)
+
+
+// 1.Magnetic force between two balls
+
+class Solution {
+    static boolean isPossible(int[] position, int m,int mid){
+        int count = 1;
+        int prevPlace = position[0];
+        for(int i = 1;i<position.length;i++){
+            if(position[i]-prevPlace>=mid){
+                count++;
+                prevPlace = position[i];
+            }
+        }
+        if(count>=m)return true;
+        return false;
+    }
+    public int maxDistance(int[] position, int m) {
+        Arrays.sort(position);
+        int low = 1;
+        int high = position[position.length - 1] - position[0];
+
+        while(low <= high){
+            int mid = (low+high)/2;
+            if(isPossible(position,m,mid)){
+                low = mid + 1; // I need the largest minimum
+            }
+            else{
+                high = mid - 1;
+            }
+        }
+        return high;
+    }
+
+}
+
+// 2 . Aggressive cows
+
+class Solution {
+    static boolean isPossible(int n, int k, int[] stalls,int mid){
+        int count = 1;
+        int prevPos = stalls[0];
+        
+        for(int i = 1;i<n;i++){
+            if(stalls[i]-prevPos>mid){
+                count++;
+                prevPos = stalls[i];
+            }
+        }
+        if(count>=k)return true;
+        return false;
+    }
+    public static int solve(int n, int k, int[] stalls) {
+        Arrays.sort(stalls);
+        int low = 1;
+        int high = stalls[n-1]-stalls[0];
+        
+        while(low<=high){
+            int mid = (low + high)/2;
+            if(isPossible(n,k,stalls,mid)){
+                low = mid + 1;
+            }
+            else{
+                high = mid - 1;
+            }
+        }
+        return high+1;
+    }
+}
