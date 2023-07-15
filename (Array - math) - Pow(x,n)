@@ -1,0 +1,27 @@
+class Solution {
+    public double myPow(double x, int n) {
+        //We can actually do in O(N) by linerly running a loop from 1 to n and each time doing x*x
+
+        // Optimally we can do it in O(logN) time
+        // we know 2^5 = 2^4 * 2 = 4^2 * 2 = 16^1 * 2 = 32
+
+        // if n%2 == 1 then ans = ans * x  with n= n-1
+        // if n%2 == 0 then x = x * x with n=n/2;
+        double ans = 1.0;
+        long nn = n;
+        if(nn<0) nn = -1 * nn;
+        while(nn>0){
+            if(nn%2 ==1){
+                ans = ans*x;
+                nn=nn-1;
+            }else{
+                x=x*x;
+                nn=nn/2;
+            }
+        }
+        if(n<0){
+            ans = (double)(1.0)/(double)(ans);
+        }
+        return ans;
+    }
+}
