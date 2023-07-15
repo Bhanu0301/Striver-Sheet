@@ -1,0 +1,32 @@
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        /*Idea : APPLY BINARY SEARCH ON MATRIX
+                MID = MATRIX[MID / (NO. OF COLOUMNS)][MID % (NO. OF COLOUMNS)] */ 
+
+                
+        int n = matrix.length; //NO. OF rows
+        int m = matrix[0].length; // No of columns
+        // Imaginary indices fro m 0 to n*m-1 as all elements are sorted iun each row and also if considered as a complete n*m array we find that it is a sorted array
+        int low = 0;
+        int high = (n*m)-1;
+        //if nothing in matrix then return false
+        if (matrix == null || matrix.length == 0) {
+                return false;
+        }
+        //BINARY SEARCH as elements are sorted
+        while(low <= high){
+            int mid = (low + high)/2;
+            if(target == matrix[mid/m][mid%m]){
+                return true;
+            }// mid/m(mid / no. of cols) gives us the row index and (mid % n) gives the col index
+            else if(target>matrix[mid/m][mid%m]){
+                low = mid+1;
+            }
+            else{
+                high = mid-1;
+            }
+
+        }
+        return false;
+    }
+}
