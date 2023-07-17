@@ -1,0 +1,25 @@
+class Solution {
+    //MOORE'S VOTING ALGORITHM
+    public int majorityElement(int[] nums) {
+        int count = 0;
+        int element = 0;
+        /*[2,2,1,1,1,2,2]
+        elem = 2
+        count++ (1)
+        count-- (0)
+        elem = 1
+        count++;(1)
+        count-- (0);
+        elem = 2 -> return 2 as answer
+        */
+
+        for(int num:nums){
+            if(count == 0){
+                element=num;
+            }
+            if(num==element)count++;
+            else count--;
+        }
+        return element;
+    }
+}
