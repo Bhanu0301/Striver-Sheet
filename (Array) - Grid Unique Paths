@@ -1,0 +1,17 @@
+class Solution {
+    //Google question anta ga....!!!!!
+    public int uniquePaths(int m, int n) {
+        //We can arrive to soln if we can find the no. of ways in which  down or right paths can be made to reach soln
+
+        // for 2X3 matrix we can have RRB,BRR,RBR (2-1 BOTTOMS AND 3-1 RIGHTS)
+        // AND BOTTOM CAN BE EITHER THE 1ST,2ND, OR 3RD STEP(in 3C1 ways we can place bottom in the 3 steps _ _ _ need to reach final)
+
+        int N = m+n-2; // Total unique paths for MxN matrix will be (m-1)+(n-1)= m+n-2 ways.
+        int r = n-1; // denominator kosam //it can be m-1 also 
+        double res = 1.0;
+        for(int i = 1;i<=r ;i++){
+            res = res * (N-r+i)/i; //10C2 kosam (1*(10-2+1)/1)*(10-2+2)/2 = 1*9/1*10/2 = 10*9/2*1 = 45 which is correct
+        }
+        return (int)res;
+    }
+}
