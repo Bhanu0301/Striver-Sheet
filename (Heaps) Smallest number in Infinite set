@@ -1,0 +1,48 @@
+//Solution 1
+
+class SmallestInfiniteSet {
+    PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->a-b);
+    public SmallestInfiniteSet() {
+        
+        for(int i = 1;i<=1000;i++){
+            pq.add(i);
+        }
+    }
+    
+    public int popSmallest() {
+        return pq.poll();
+    }
+    
+    public void addBack(int num) {
+        if(!pq.contains(num))pq.add(num);
+    }
+}
+
+//Solution 2
+
+class SmallestInfiniteSet {
+    Set<Integer> set;
+    int count ;
+    public SmallestInfiniteSet() {
+        count = 1;
+        set = new HashSet<>();
+    }
+    
+    public int popSmallest() {
+        if(set.isEmpty()){
+            count ++;
+            return count-1;
+        }
+        else{
+            int ans = Collections.min(set);
+            set.remove(ans);
+            return ans;
+        }
+    }
+    
+    public void addBack(int num) {
+        if(num<count){
+            set.add(num);
+        }
+    }
+}
