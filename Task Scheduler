@@ -1,0 +1,17 @@
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        int[] char_freq = new int[26];
+        for(int i = 0;i<tasks.length;i++){
+            char_freq[tasks[i]-'A']++;
+        }
+        Arrays.sort(char_freq);//this will not affect time complexity because of its fixed 26 size
+        int max = char_freq[25]; //sorted to find the max freq
+        int idle_slots = (max - 1)*n; // max-1 as at  last i dont need idle
+        for(int i = 24;i>=0;i--){
+            idle_slots = idle_slots - Math.min(max-1,char_freq[i]);//fill the middle idle slots with remaining elements, and it should be filled min(max-1,char_freq[i]) times 
+            //(why?) A _ _ A _ _ A -> A B _ A B _ A 'B' (B at last is placed not in  idle slot and its absolutely accepted)
+        }
+        idle_slots = Math.max(0,idle_slots);
+        return idle_slots + tasks.length; // min of length size time is reqd for sure
+    }
+}
