@@ -1,0 +1,15 @@
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->b-a);
+        int n = nums.length;
+        for(int i = 0;i<n;i++){
+            pq.add(nums[i]);
+        }
+        int remove_till = k-1; // remove k-1 elements to get the kth largest
+        while(remove_till>0){
+            pq.remove();
+            remove_till--;
+        }
+        return pq.peek();
+    }
+}
