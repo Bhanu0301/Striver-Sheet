@@ -1,0 +1,43 @@
+//Leetcode hard
+
+
+class Solution {
+    public double mincostToHireWorkers(int[] quality, int[] wage, int k) {
+        double[][] workers = new double[wage.length][2];
+        for(int i = 0;i<wage.length;i++){
+            workers[i][0] = (double)(wage[i])/quality[i];  //Find the ratios
+            workers[i][1] = quality[i];
+        }
+        Arrays.sort(workers,(a,b)->(Double.compare(a[0],b[0]))); //ascending order of ratios
+        double res = Double.MAX_VALUE;
+        double sum = 0;
+        PriorityQueue<Double> pq = new PriorityQueue<>();
+        for(double work[]:workers){
+            sum = sum + work[1];
+            pq.add(-work[1]);
+            if(pq.size()>k)sum = sum + pq.poll(); //minimum of sum is reqd
+            if(pq.size()==k)res = Math.min(res,work[0]*sum); //work[0] here is the max ratio
+        }
+        return res;
+    }
+}
+
+/*class Solution {
+    public double mincostToHireWorkers(int[] quality, int[] wage, int k) {
+        double[][] workers = new double[wage.length][2];
+        for(int i=0;i<wage.length;i++){
+            workers[i][0] = (double)(wage[i])/quality[i];
+            workers[i][1] = quality[i];
+        }
+        Arrays.sort(workers, (a,b) ->Double.compare(a[0], b[0]));
+        double res = Double.MAX_VALUE, sum =0;
+        PriorityQueue<Double> pq = new PriorityQueue<>();
+        for(double[] work: workers){
+            sum += work[1];
+            pq.add(-work[1]);
+            if(pq.size() >k) sum += pq.poll();
+            if(pq.size() == k) res = Math.min(res, work[0]*sum);
+        }
+        return res;
+    }
+} */
