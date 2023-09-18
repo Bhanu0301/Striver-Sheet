@@ -1,0 +1,126 @@
+//GFG 
+class Solution
+{
+    private static Node findNode(Node root , int target){
+        if(root == null || root.data == target)
+        return root;
+        
+        Node left = findNode(root.left , target);
+        Node right = findNode(root.right , target);
+        
+        return left != null ? left : right;
+    } 
+    private static void markParents(Node root, HashMap<Node,Node> parent_track){
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            Node cur = queue.poll();
+            if(cur.left!=null){
+                queue.offer(cur.left);
+                parent_track.put(cur.left,cur);
+            }
+            if(cur.right!=null){
+                queue.offer(cur.right);
+                parent_track.put(cur.right,cur);
+            }
+        }
+    }
+    public static ArrayList<Integer> KDistanceNodes(Node root, int target , int k)
+    {
+        // return the sorted list of all nodes at k dist
+        HashMap<Node, Node> parent_track = new HashMap<>();
+        markParents(root,parent_track);
+        Node tar = findNode(root,target);
+        Queue<Node> queue = new LinkedList<Node>();
+        HashMap<Node, Boolean> visited = new HashMap<>();
+        queue.offer(tar);
+        visited.put(tar,true);
+        int cur_level = 0;
+        
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            if(cur_level == k)break;
+            cur_level++;
+            for(int i = 0;i<size;i++){
+                Node cur = queue.poll();
+                if(cur.left!=null && visited.get(cur.left)==null){
+                    queue.offer(cur.left);
+                    visited.put(cur.left,true);
+                }
+                if(cur.right!=null && visited.get(cur.right)==null){
+                    queue.offer(cur.right);
+                    visited.put(cur.right,true);
+                }
+                if(parent_track.get(cur)!=null && visited.get(parent_track.get(cur))==null){
+                    queue.offer(parent_track.get(cur));
+                    visited.put(parent_track.get(cur),true);
+                }
+            }
+        }
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        while(!queue.isEmpty()){
+            Node current = queue.poll();
+            res.add(current.data);
+        }
+        Collections.sort(res);
+        return res;
+    }
+};
+
+
+
+//Leetcode (here target is direct Node itself)
+class Solution {
+    private void markParents(TreeNode root, Map<TreeNode,TreeNode> parent_track){
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            TreeNode cur = queue.poll();
+            if(cur.left!=null){
+                queue.offer(cur.left);
+                parent_track.put(cur.left,cur);
+            }
+            if(cur.right!=null){
+                queue.offer(cur.right);
+                parent_track.put(cur.right,cur);
+            }
+        }
+    }
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        //Mark the parents so that we can travel upwards
+        Map<TreeNode, TreeNode> parent_track = new HashMap<>();
+        markParents(root,parent_track);
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        Map<TreeNode, Boolean> visited = new HashMap<>();
+        queue.offer(target);
+        visited.put(target,true);
+        int cur_level = 0;
+        
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            if(cur_level == k)break;
+            cur_level++;
+            for(int i = 0;i<size;i++){
+                TreeNode cur = queue.poll();
+                if(cur.left!=null && visited.get(cur.left)==null){
+                    queue.offer(cur.left);
+                    visited.put(cur.left,true);
+                }
+                if(cur.right!=null && visited.get(cur.right)==null){
+                    queue.offer(cur.right);
+                    visited.put(cur.right,true);
+                }
+                if(parent_track.get(cur)!=null && visited.get(parent_track.get(cur))==null){
+                    queue.offer(parent_track.get(cur));
+                    visited.put(parent_track.get(cur),true);
+                }
+            }
+        }
+        List<Integer> res = new ArrayList<Integer>();
+        while(!queue.isEmpty()){
+            TreeNode current = queue.poll();
+            res.add(current.val);
+        }
+        return res;
+    }
+}
