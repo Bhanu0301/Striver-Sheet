@@ -1,0 +1,15 @@
+class Solution {
+    public int maxPathSum(TreeNode root) {
+        int[] max_sum = new int[1];
+        max_sum[0] = Integer.MIN_VALUE;
+        findSum(root,max_sum);
+        return max_sum[0];
+    }
+    private int findSum(TreeNode node, int[] max_sum){
+        if(node==null)return 0;
+        int left = Math.max(0,findSum(node.left,max_sum));
+        int right = Math.max(0,findSum(node.right,max_sum));
+        max_sum[0] = Math.max(max_sum[0], left + right + node.val);
+        return node.val + Math.max(left,right);
+    }
+}
