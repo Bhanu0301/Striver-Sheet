@@ -1,0 +1,31 @@
+class Solution {
+    public int characterReplacement(String s, int k) {
+        int n = s.length();
+
+        int[] char_freq = new int[26];
+        int start = 0;
+        int max_length = 0;
+        int max_count = 0;//keep track ,so u can find the replacement size that is possible
+        for(int end = 0;end<n ;end++){
+            char_freq[(s.charAt(end)-'A')]++;
+            max_count = Math.max(max_count,char_freq[(s.charAt(end)-'A')]);
+            //start            //end
+            // 'A'    A A B A   'B'  B A
+                 //start        //end
+            // A    'A'    A B A   'B'  B A
+            
+            //....
+                     //start      //end
+            // A  A A   'B'     A   'B'  B A
+            while(end - start - max_count+1>k){
+                //until those 2 B's are reduces to 1 B'
+                char_freq[s.charAt(start)-'A']--;
+                start++;
+            }
+            max_length = Math.max(end-start+1,max_length);
+
+        }
+        return max_length;
+
+    }
+}
