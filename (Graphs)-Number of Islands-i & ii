@@ -1,0 +1,84 @@
+//bfs
+
+class Pair{
+    int first;
+    int second;
+    public Pair(int first, int second){
+        this.first = first;
+        this.second = second;
+    }
+}
+class Solution {
+    private void bfs(char[][] grid, int[][] visited,int row, int col){
+        int n = grid.length;
+        int m = grid[0].length;
+        Queue<Pair> q = new LinkedList<>();
+        visited[row][col] = 1;
+        q.add(new Pair(row,col));
+
+        while(!q.isEmpty()){
+            int curr_row = q.peek().first;
+            int curr_col = q.peek().second;
+            q.remove();
+
+            for(int del_row = -1;del_row<=1;del_row++){
+                for(int del_col = -1;del_col<=1;del_col++){
+                    int n_row = del_row + curr_row;
+                    int n_col = del_col + curr_col;
+                    //Math.abs(del_row+del_col)==1 handles to ignore diagonals
+                    if(Math.abs(del_row+del_col)==1 && n_row>=0 && n_col>=0 && n_row<n && n_col<m && grid[n_row][n_col]=='1' && visited[n_row][n_col]==0){
+                        visited[n_row][n_col]=1;
+                        q.add(new Pair(n_row,n_col));
+                    }
+                }
+            }
+        }
+    }
+    public int numIslands(char[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        int count = 0;
+        int[][] visited= new int[n][m];
+
+        for(int i = 0;i<n;i++){
+            for(int j = 0;j<m;j++){
+                if(visited[i][j] == 0 && grid[i][j] == '1'){
+                    count++;
+                    bfs(grid,visited,i,j);
+                }
+            }
+        }
+        return count;
+    }
+}
+
+//DFS
+class Solution {
+    public int numIslands(char[][] grid) {
+        char data[][] = grid;
+        int count = 0;
+        for(int i = 0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(data[i][j] == '1'){
+                    count++;
+                    dfs(i,j,data,grid);
+                }
+            }
+        }
+        return count;
+    }
+    public void dfs(int row,int col,char[][] data,char[][] grid)
+    {
+        if(row>=0 && row<grid.length && col>=0 && col<grid[0].length && data[row][col]=='1'){
+            data[row][col]='0';
+            dfs(row,col-1,data,grid);
+            dfs(row,col+1,data,grid);
+            dfs(row-1,col,data,grid);
+            dfs(row+1,col,data,grid);
+            // dfs(row-1,col-1,data,grid);
+            // dfs(row+1,col+1,data,grid);
+            // dfs(row-1,col+1,data,grid);
+            // dfs(row+1,col-1,data,grid);
+        }
+    }
+}
